@@ -1,0 +1,212 @@
+#:kivy 2.3.0
+
+<HomeScreen>:
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 25
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgb: (.06,.07,.09)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: 70
+            spacing: 15
+
+            Label:
+                id: month_title
+                text: "Month"
+                font_size: 32
+                bold: True
+                color: 1,1,1,1
+
+            Widget:
+
+            Spinner:
+                id: year_spinner
+                text: "2026"
+                values: [str(i) for i in range(2000,2101)]
+                size_hint: None, None
+                size: 120, 45
+                background_normal: ""
+                background_color: (.2,.24,.32,1)
+                on_text: root.update_calendar()
+
+            Spinner:
+                id: month_spinner
+                text: "January"
+                values: root.months
+                size_hint: None, None
+                size: 160, 45
+                background_normal: ""
+                background_color: (.2,.24,.32,1)
+                on_text: root.update_calendar()
+
+
+        
+        BoxLayout:
+            padding: 20
+
+            canvas.before:
+                Color:
+                    rgb: (.12,.14,.18)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+
+            GridLayout:
+                id: calendar_grid
+                cols: 7
+                spacing: 12
+                padding: 10
+
+
+
+
+
+
+<DiaryScreen>:
+
+    BoxLayout:
+        padding: 20
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgb: (.06,.07,.09)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 15
+            padding: 15
+
+            canvas.before:
+                Color:
+                    rgb: (.12,.14,.18)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+
+
+            Label:
+                id: diary_title
+                text: "Diary"
+                font_size: 26
+                bold: True
+                size_hint_y: None
+                height: 50
+                color: 1,1,1,1
+
+
+            TextInput:
+                id: editor
+                multiline: True
+                background_color: (.18,.2,.25,1)
+                foreground_color: (1,1,1,1)
+                cursor_color: 1,1,1,1
+                padding: 15
+                font_size: 16
+
+
+            BoxLayout:
+                size_hint_y: None
+                height: 55
+                spacing: 10
+
+                Button:
+                    text: "Save"
+                    background_normal: ""
+                    background_color: (.3,.55,.9,1)
+                    bold: True
+                    on_press: root.save()
+
+                Button:
+                    text: "Back"
+                    background_normal: ""
+                    background_color: (.7,.3,.3,1)
+                    bold: True
+                    on_press: root.go_home()
+
+
+
+        
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: .38
+            spacing: 15
+            padding: 15
+
+            canvas.before:
+                Color:
+                    rgb: (.12,.14,.18)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+
+
+            Label:
+                text: "To-Do List"
+                font_size: 24
+                bold: True
+                size_hint_y: None
+                height: 45
+                color: 1,1,1,1
+
+
+            
+            BoxLayout:
+                size_hint_y: None
+                height: 50
+                spacing: 8
+
+                TextInput:
+                    id: task_input
+                    hint_text: "New task..."
+                    background_color: (.18,.2,.25,1)
+                    foreground_color: 1,1,1,1
+                    padding: 10
+
+                Spinner:
+                    id: priority_spinner
+                    text: "Medium"
+                    values: ["High","Medium","Low"]
+                    size_hint_x: None
+                    width: 110
+                    background_normal: ""
+                    background_color: (.2,.24,.32,1)
+
+                Button:
+                    text: "+"
+                    font_size: 22
+                    size_hint_x: None
+                    width: 55
+                    background_normal: ""
+                    background_color: (.45,.35,.95,1)
+                    on_press: root.add_task()
+
+
+          
+            ScrollView:
+
+                GridLayout:
+                    id: tasks_container
+                    cols: 1
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
